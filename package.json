@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "name": "post-imports",
+  "version": "1.0.0",
+  "description": "To change file imports path after compilation and bundle",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"nodemon --exec ts-node -r tsconfig-paths/register src/index.ts\"",
+    "build": "tsc -p tsconfig.json && tsc-alias",
+    "start": "node dist/index.js",
+    "test": "node dist/bin/index.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "bin": {
+    "post-imports": "dist/bin/index.js"
+  },
+  "engines": {
+    "node": ">=16.20.2"
+  },
+  "keywords": [],
+  "author": "qwertuhh",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/node": "^22.15.30",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github."
+  },
+  "bugs": {
+    "url": "https://github.co"
+  },
+  "homepage": "https://github.co",
+  "postImports": {
+    "root": "./dist",
+    "changes": [
+      {
+        "toChange": "",
+        "toChangeFrom": ""
+      }
+    ],
+    "ignore": [
+      "**/*.d.ts",
+      "**/*.js",
+      "**/*.json"
+    ]
+  },
+  "dependencies": {
+    "glob": "^11.0.2",
+    "zod": "^3.25.56",
+    "zod-validation-error": "^3.4.1"
+  }
+}
