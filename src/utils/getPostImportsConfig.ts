@@ -36,6 +36,9 @@ function getPostImportsConfig(filePath: string): Config {
     const data = readFileSync(filePath, "utf-8");
     const packageJson = JSON.parse(data);
     const config = postImportsSchema.parse(packageJson.postImports);
+
+    //? If no files are specified in the config, add a default one
+    if (!config.files) config.files = ["**/*.js"];
     return config;
   } catch (error) {
     if (error instanceof Error) {
