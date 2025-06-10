@@ -2,6 +2,10 @@
 
 This Modules helps to ship with desired folder structure.
 
+```terminal
+npm i -D post-imports
+```
+
 > [!NOTE]
 > - This module only works after compilation. 
 >

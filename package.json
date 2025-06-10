@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package",
   "name": "post-imports",
   "version": "1.0.0",
-  "description": "To change file imports path after compilation and bundle",
+  "description": "This modules helps to ship with desired folder structure.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -38,12 +38,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/qwertuhh/post-imports.git"
+    "url": "https://github.com/Qwertuhh/post-imports"
   },
   "bugs": {
-    "url": "https://github.co"
+    "url": "https://github.com/Qwertuhh/post-imports/issues"
   },
-  "homepage": "https://github.co",
+  "homepage": "https://github.com/Qwertuhh/post-imports#readme",
   "postImports": {
     "root": "./dist",
     "changes": [
