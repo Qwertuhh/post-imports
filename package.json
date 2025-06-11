@@ -21,7 +21,21 @@
   "engines": {
     "node": ">=16.20.2"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "post-imports",
+    "typescript",
+    "monorepo",
+    "deployment",
+    "folder-structure",
+    "building",
+    "compiling",
+    "bundling",
+    "shipping",
+    "copy",
+    "alias",
+    "development"
+  ],
   "author": "qwertuhh",
   "license": "MIT",
   "type": "commonjs",
@@ -45,20 +59,6 @@
     "url": "https://github.com/Qwertuhh/post-imports/issues"
   },
   "homepage": "https://github.com/Qwertuhh/post-imports#readme",
-  "keyword": [
-    "post-imports",
-    "typescript",
-    "monorepo",
-    "deployment",
-    "folder-structure",
-    "building",
-    "compiling",
-    "bundling",
-    "shipping",
-    "copy",
-    "alias",
-    "development"
-  ],
   "postImports": {
     "root": "./dist",
     "changes": [
