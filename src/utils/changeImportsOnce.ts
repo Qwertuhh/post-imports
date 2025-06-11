@@ -29,6 +29,33 @@ function getImports(filePath: string): ImportInfo[] {
 }
 
 /**
+ * Parses the specified file to extract all require statements.
+ *
+ * @param filePath - The path to the file to be parsed.
+ * @returns An array of ImportInfo objects, each containing details of a require statement:
+ *  - `import`: The imported entities as a string.
+ *  - `importFrom`: The module path from which the entities are imported.
+ *  - `line`: The line number in the file where the require statement is located.
+ */
+function getImportsCommonJS(filePath: string): ImportInfo[] {
+  const fileContent = readFileSync(filePath, "utf-8");
+  const requireRegex = /const\s+([\s\S]+?)\s*=\s*require\(['"](.+?)['"]/g;
+
+  const requires: ImportInfo[] = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = requireRegex.exec(fileContent)) !== null) {
+    requires.push({
+      import: match[1].trim(),
+      importFrom: match[2],
+      line: fileContent.substring(0, match.index).split("\n").length,
+    });
+  }
+
+  return requires;
+}
+
+/**
  * Replaces the import statement at the given line number in the specified file with a
  * new import statement. The new import statement is created by replacing the given
  * oldImportPath with the newImportPath in the original import statement.
@@ -64,9 +91,11 @@ function changeImport(
 function changeImportsOnce(
   filePath: string,
   oldImportPath: string,
-  newImportPath: string
+  newImportPath: string,
+  isCommonJS = false
 ): boolean {
-  const imports = getImports(filePath);
+
+  const imports = isCommonJS ? getImportsCommonJS(filePath) : getImports(filePath);
   let changed = false;
 
   for (const imp of imports) {

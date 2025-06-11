@@ -7,6 +7,7 @@ const postImportsSchema = z.object({
   root: z.string(),
   delete: z.array(z.string()).optional(),
   files: z.array(z.string()).optional(),
+  type: z.enum(["esm", "cjs"]),
   copy: z
     .array(
       z.object({

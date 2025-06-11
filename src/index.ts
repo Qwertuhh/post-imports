@@ -63,7 +63,7 @@ function priorityFileChanges(config: Config) {
       }
 
       console.log(
-        changeImportsOnce(filePath, toChange, toChangeFrom)
+        changeImportsOnce(filePath, toChange, toChangeFrom, config.type === "cjs")
           ? `Changed imports in ${filePath} from ${toChangeFrom} to ${toChange}`
           : `No imports found that need updating in ${filePath}`
       );

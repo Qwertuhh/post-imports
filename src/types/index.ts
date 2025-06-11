@@ -21,6 +21,7 @@ interface Config {
   copy?: CopyConfig[];
   delete?: string[];
   root: string;
+  type: "esm" | "cjs";
   files?: string[];
   changes: ChangeConfig[];
   ignore?: string[];
