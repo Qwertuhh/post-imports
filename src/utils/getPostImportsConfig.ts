@@ -1,11 +1,20 @@
 import { z } from "zod";
 import { Config } from "@/types/index";
 import { fromError } from "zod-validation-error";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 
 const postImportsSchema = z.object({
   root: z.string(),
+  delete: z.array(z.string()).optional(),
   files: z.array(z.string()).optional(),
+  copy: z
+    .array(
+      z.object({
+        from: z.string(),
+        to: z.string(),
+      })
+    )
+    .optional(),
   file: z
     .array(
       z.object({
@@ -39,6 +48,12 @@ function getPostImportsConfig(filePath: string): Config {
 
     //? If no files are specified in the config, add a default one
     if (!config.files) config.files = ["**/*.js"];
+
+    //? Check if the root directory exists
+    if (!existsSync(config.root)) {
+      console.error(`Root directory not found: ${config.root}`);
+    }
+    console.log("Configiguration:\n",config);
     return config;
   } catch (error) {
     if (error instanceof Error) {

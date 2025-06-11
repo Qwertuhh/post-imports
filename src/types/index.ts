@@ -13,7 +13,13 @@ interface ChangeConfig {
   toChange: string;
   toChangeFrom: string;
 }
+interface CopyConfig {
+  from: string;
+  to: string;
+}
 interface Config {
+  copy?: CopyConfig[];
+  delete?: string[];
   root: string;
   files?: string[];
   changes: ChangeConfig[];
@@ -21,5 +27,4 @@ interface Config {
   file?: FileConfig[];
 }
 
-export { ImportInfo, FileConfig, ChangeConfig, Config };
-
+export { ImportInfo, FileConfig, ChangeConfig, Config, CopyConfig };

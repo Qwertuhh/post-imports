@@ -1,6 +1,5 @@
 import { globSync } from "glob";
-import { resolve } from "path";
-import { join } from "path";
+import { join, resolve } from "path";
 import { Config } from "@/types/index.js";
 
 /**
@@ -11,7 +10,7 @@ import { Config } from "@/types/index.js";
  * @returns An array of file paths that match the given configuration.
  */
 
-function getFilePaths(config: Config): string[] {
+function getAllPaths(config: Config): string[] {
   const { root, files, ignore } = config;
   let allFiles: string[] = [];
 
@@ -21,6 +20,7 @@ function getFilePaths(config: Config): string[] {
     );
     return allFiles;
   }
+  //? Patterns of files
   let patterns = files.map((file) => resolve(join(root, file)));
   const allSelectedFiles = globSync(patterns, {
     windowsPathsNoEscape: true,
@@ -43,4 +43,4 @@ function getFilePaths(config: Config): string[] {
   return allFiles;
 }
 
-export default getFilePaths;
+export default getAllPaths;

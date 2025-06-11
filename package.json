@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package",
   "name": "post-imports",
-  "version": "1.0.1",
+  "version": "1.2.1",
   "description": "This modules helps to ship with desired folder structure.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -26,6 +26,7 @@
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
+    "@types/copy": "^0.3.5",
     "@types/glob": "^8.1.0",
     "@types/node": "^22.15.30",
     "concurrently": "^9.1.2",
@@ -44,6 +45,20 @@
     "url": "https://github.com/Qwertuhh/post-imports/issues"
   },
   "homepage": "https://github.com/Qwertuhh/post-imports#readme",
+  "keyword": [
+    "post-imports",
+    "typescript",
+    "monorepo",
+    "deployment",
+    "folder-structure",
+    "building",
+    "compiling",
+    "bundling",
+    "shipping",
+    "copy",
+    "alias",
+    "development"
+  ],
   "postImports": {
     "root": "./dist",
     "changes": [
@@ -59,6 +74,7 @@
     ]
   },
   "dependencies": {
+    "copy": "^0.3.2",
     "glob": "^11.0.2",
     "zod": "^3.25.56",
     "zod-validation-error": "^3.4.1"
