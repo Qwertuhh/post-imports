@@ -25,12 +25,14 @@ const postImportsSchema = z.object({
       })
     )
     .optional(),
-  changes: z.array(
-    z.object({
-      toChange: z.string(),
-      toChangeFrom: z.string(),
-    })
-  ),
+  changes: z
+    .array(
+      z.object({
+        toChange: z.string(),
+        toChangeFrom: z.string(),
+      })
+    )
+    .optional(),
   ignore: z.array(z.string()).optional(),
 });
 
@@ -47,14 +49,11 @@ function getPostImportsConfig(filePath: string): Config {
     const packageJson = JSON.parse(data);
     const config = postImportsSchema.parse(packageJson.postImports);
 
-    //? If no files are specified in the config, add a default one
-    if (!config.files) config.files = ["**/*.js"];
-
     //? Check if the root directory exists
     if (!existsSync(config.root)) {
       console.error(`Root directory not found: ${config.root}`);
     }
-    console.log("Configiguration:\n",config);
+    console.log("Configiguration:\n", config);
     return config;
   } catch (error) {
     if (error instanceof Error) {

@@ -39,7 +39,8 @@ function getImports(filePath: string): ImportInfo[] {
  */
 function getImportsCommonJS(filePath: string): ImportInfo[] {
   const fileContent = readFileSync(filePath, "utf-8");
-  const requireRegex = /const\s+([\s\S]+?)\s*=\s*require\(['"](.+?)['"]/g;
+  const requireRegex = /(?:const|let|var)\s+([\w${}\[\],\s]+)\s*=\s*(?:__importDefault\(\s*)?require\(\s*['"]([^'"]+)['"]\s*\)\s*\)?\s*;/g
+    
 
   const requires: ImportInfo[] = [];
   let match: RegExpExecArray | null;
@@ -51,7 +52,7 @@ function getImportsCommonJS(filePath: string): ImportInfo[] {
       line: fileContent.substring(0, match.index).split("\n").length,
     });
   }
-
+  console.log(requires);
   return requires;
 }
 
@@ -94,10 +95,11 @@ function changeImportsOnce(
   newImportPath: string,
   isCommonJS = false
 ): boolean {
-
-  const imports = isCommonJS ? getImportsCommonJS(filePath) : getImports(filePath);
+  const imports = isCommonJS
+    ? getImportsCommonJS(filePath)
+    : getImports(filePath);
   let changed = false;
-
+  console.log(`Imports: ${imports}`);
   for (const imp of imports) {
     if (imp.importFrom === oldImportPath) {
       console.log(`Updating import on line ${imp.line}: ${imp.import}`);

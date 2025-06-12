@@ -5,7 +5,7 @@ import { existsSync } from "fs";
 import { join, resolve as resolvePath } from "path";
 import { Config } from "@/types";
 import copyFiles from "@/utils/copyFiles";
-import deleteFiles from "./utils/deleteFiles";
+import deleteFiles from "@/utils/deleteFiles";
 
 /**
  * Copies files as specified in the configuration.
@@ -53,6 +53,7 @@ function deleteFilesFunction(config: Config) {
  * @throws Will log an error message if a specified file does not exist.
  */
 function priorityFileChanges(config: Config) {
+  console.log("Applying priority import changes...");
   if (config.file) {
     for (const fileConfig of config.file) {
       let { path: filePath, toChange, toChangeFrom } = fileConfig;
@@ -63,12 +64,18 @@ function priorityFileChanges(config: Config) {
       }
 
       console.log(
-        changeImportsOnce(filePath, toChange, toChangeFrom, config.type === "cjs")
+        changeImportsOnce(
+          filePath,
+          toChange,
+          toChangeFrom,
+          config.type === "cjs"
+        )
           ? `Changed imports in ${filePath} from ${toChangeFrom} to ${toChange}`
           : `No imports found that need updating in ${filePath}`
       );
     }
   }
+  console.log("Applying priority import changes completed");
 }
 
 /**
@@ -89,26 +96,27 @@ function importsChanges(filePaths: string[], config: Config) {
       console.error(`File not found: ${filePath}`);
       continue;
     }
+    if (config.changes && config.changes.length > 0) {
+      // Change imports in each file based on the changes specified in the config
+      for (const change of config.changes) {
+        const { toChange, toChangeFrom } = change;
 
-    // Change imports in each file based on the changes specified in the config
-    for (const change of config.changes) {
-      const { toChange, toChangeFrom } = change;
-      console.log(
-        changeImportsOnce(filePath, toChange, toChangeFrom)
-          ? `Changed imports in ${filePath} from ${toChangeFrom} to ${toChange}`
-          : `No imports found that need updating in ${filePath}`
-      );
+        console.log(
+          changeImportsOnce(filePath, toChange, toChangeFrom)
+            ? `Changed imports in ${filePath} from ${toChangeFrom} to ${toChange}`
+            : `No imports found that need updating in ${filePath}`
+        );
+      }
     }
   }
   console.log("Changing imports in files completed.");
 }
 
-
 /**
- * Executes the post-imports processing based on the configuration specified 
- * in the given JSON file, defaulting to "./package.json". This includes 
- * copying and deleting specified files, applying priority import changes 
- * to specific files, and modifying import paths in all matched files as per 
+ * Executes the post-imports processing based on the configuration specified
+ * in the given JSON file, defaulting to "./package.json". This includes
+ * copying and deleting specified files, applying priority import changes
+ * to specific files, and modifying import paths in all matched files as per
  * the configuration.
  *
  * @param filePath - The path to the JSON configuration file. Defaults to "./package.json".
@@ -122,14 +130,13 @@ function postImports(filePath: string = "./package.json"): boolean {
 
   //* To copy files
   copyFilesFunction(config),
-  //* To delete files
-  deleteFilesFunction(config),
-  //* First change the file imports as specified in the config. to maintain the priority
-  priorityFileChanges(config),
-  //* Change imports in each file
-  importsChanges(filePaths, config),
-
-  console.log("Post imports completed successfully.");
+    //* To delete files
+    deleteFilesFunction(config),
+    //* First change the file imports as specified in the config. to maintain the priority
+    priorityFileChanges(config),
+    //* Change imports in each file
+    importsChanges(filePaths, config),
+    console.log("Post imports completed successfully.");
 
   return true;
 }

@@ -23,7 +23,7 @@ interface Config {
   root: string;
   type: "esm" | "cjs";
   files?: string[];
-  changes: ChangeConfig[];
+  changes?: ChangeConfig[];
   ignore?: string[];
   file?: FileConfig[];
 }
